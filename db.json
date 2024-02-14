@@ -1,0 +1,46 @@
+{
+  "userData": [
+    {
+      "firstName": "Emily",
+      "lastName": "Smith",
+      "email": "emily@example.com",
+      "phone": 1234567891,
+      "address": "123 Main St",
+      "id": 123456
+    },
+    {
+      "id": 234567,
+      "firstName": "Michael",
+      "lastName": "Johnson",
+      "email": "michael@example.com",
+      "phone": "9876543210",
+      "address": "456 Elm St"
+    },
+    {
+      "id": 345678,
+      "firstName": "Sophia",
+      "lastName": "Williams",
+      "email": "sophia@example.com",
+      "phone": "5551234567",
+      "address": "789 Oak St"
+    },
+    {
+      "id": 456789,
+      "firstName": "Daniel",
+      "lastName": "Brown",
+      "email": "daniel@example.com",
+      "phone": "9998887776",
+      "address": "101 Pine St"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

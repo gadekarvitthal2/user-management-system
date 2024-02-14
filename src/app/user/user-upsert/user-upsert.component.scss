@@ -4,7 +4,7 @@
   align-items: center;
   flex-direction: column;
   row-gap: 25px;
-  padding-top: 10%;
+  padding: 2% 0px;
 
   h1 {
     font-size: 30px;
@@ -40,6 +40,9 @@
       border-radius: 10px;
       background: #1b811b;
       color: white;
+    }
+    .user-exist-msg {
+      color: red;
     }
   }
 

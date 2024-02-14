@@ -2,26 +2,42 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.5.
 
-## Development server
+Before running this project, make sure you have the following installed:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Node.js: [Download](https://nodejs.org/)
+- Angular CLI: Install globally via npm: `npm install -g @angular/cli`
+- JSON Server: Install globally via npm: `npm install -g json-server`
 
-## Code scaffolding
+## Getting Started
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1. Clone this repository:
+git clone https://github.com/gadekarvitthal2/user-management-system.git
 
-## Build
+2. Navigate to the project directory: 
+cd user-management-system
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+3. Install dependencies:
+npm install
 
-## Running unit tests
+4. start the Angular development server, run:
+ng serve
+Navigate to http://localhost:4200/ in your browser to view the Angular application.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+5. Start the json-server using following command
+npx json-server db.json
 
-## Running end-to-end tests
+if it is not work then try following command
+json-server --watch db.json
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+6. JSON Server Endpoints
+GET /userData: Get all user data.
+GET /userData/:id: Get user data by ID.
+POST /userData: Create a new user.
+PUT /userData/:id: Update user data by ID.
+DELETE /userData/:id: Delete user data by ID.
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+
+

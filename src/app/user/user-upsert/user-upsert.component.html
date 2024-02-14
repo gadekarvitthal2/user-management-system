@@ -55,7 +55,8 @@
 
     <div class="submit-block">
       <button (click)="onSubmitForm()" type="button">Submit</button>
+      <p class="user-exist-msg" *ngIf="isUserAlreadyExist">User Already Exist</p>
     </div>
   </form>
 </div>
-<app-user-list></app-user-list>
+<app-user-list (userDataEvent)="userDataFromUserList($event)"></app-user-list>

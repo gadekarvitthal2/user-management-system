@@ -1,15 +1,40 @@
-import { Injectable } from '@angular/core';
-
+import { Injectable, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { User } from './user';
 @Injectable({
   providedIn: 'root'
 })
-export class DataService {
-  DUMMY_USERS = [
-    { id: 1, firstName: 'John', lastName: 'Doe', email: 'john@example.com', phone: '1234567890' },
-    { id: 2, firstName: 'Jane', lastName: 'Doe', email: 'jane@example.com', phone: '9876543210' },
-    { id: 3, firstName: 'Alice', lastName: 'Smith', email: 'alice@example.com', phone: '5551234567' },
-    { id: 4, firstName: 'Bob', lastName: 'Johnson', email: 'bob@example.com', phone: '9998887776' },
-    { id: 5, firstName: 'Charlie', lastName: 'Brown', email: 'charlie@example.com', phone: '3332221110' },
-  ];
-  constructor() { }
+export class DataService implements OnInit{
+  apiUrl = 'http://localhost:3000/userData'
+  userData: any;
+
+  constructor(private http:HttpClient) {}
+  async ngOnInit(): Promise<void> {
+  this.userData = await this.getUsers().toPromise();
+  }
+
+  showAlert(methodType: any) {
+    alert(`User ${methodType} successfully Please Refresh the page`);
+  }
+
+  getUsers(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
+
+  getUserById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
+
+  addUser(user: User): Observable<any> {
+    return this.http.post<any>(this.apiUrl, user);
+  }
+
+  updateUser(user: User): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${user.id}`, user);
+  }
+
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  }
 }

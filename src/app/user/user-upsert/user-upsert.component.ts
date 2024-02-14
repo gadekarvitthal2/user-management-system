@@ -10,13 +10,16 @@ import { Router } from '@angular/router';
 })
 export class UserUpsertComponent implements OnInit {
   userForm!: FormGroup;
+  isUserAlreadyExist: boolean = false;
+  userDataList: any;
+
   constructor(
     private formBuilder: FormBuilder,
     private dataService: DataService,
-    private router:Router
+    private router: Router
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.userForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -36,6 +39,7 @@ export class UserUpsertComponent implements OnInit {
       ],
       address: ['', Validators.required],
     });
+    this.userDataList = await this.dataService.getUsers().toPromise();
   }
   //-- This methods remove extra numbers if user entered more than 10 numbers
   onPhoneInput(event: any) {
@@ -45,16 +49,72 @@ export class UserUpsertComponent implements OnInit {
     }
   }
 
-  onSubmitForm() {
-    console.log(this.userForm.value);
-    this.dataService.DUMMY_USERS.push(this.userForm.value);
-    console.log('this.dataService.DUMMY_USERS :>> ', this.dataService.DUMMY_USERS);
+  async onSubmitForm() {
     if (this.userForm.valid) {
-      alert('Form submitted successfully');
-      this.router.navigate(['/user-list'])
-      this.userForm.reset();
+      if (this.doesUserExist(this.userForm.value)) {
+
+        this.isUserAlreadyExist = true;
+
+        let existingUserIndex = this.userDataList.findIndex(
+          (user: any) =>
+            this.userForm.value.id == user.id ||
+            this.userForm.value.email === user.email ||
+            Number(this.userForm.value.phone) === Number(user.phone)
+        );
+
+        let userPayload = {
+          ...this.userForm.value,
+          id: this.userForm.value.id
+            ? this.userForm.value.id
+            : this.userDataList[existingUserIndex].id,
+        };
+
+        this.dataService.updateUser(userPayload).subscribe(async (res) => {
+          if (res) {
+            this.userDataList = await this.dataService.getUsers().toPromise();
+            this.dataService.showAlert('Updated');
+          }
+        });
+      } else {
+        this.userForm.value.id = Math.floor(
+          100000 + Math.random() * 900000
+        );
+        this.dataService.addUser(this.userForm.value).subscribe(
+          async (res) => {
+            if (res) {
+              this.dataService.showAlert('Added');
+              this.userDataList = await this.dataService.getUsers().toPromise();
+            }
+          },
+          (err) => {
+            console.error(err);
+          }
+        );
+        this.userForm.reset();
+      }
     } else {
       this.userForm.markAllAsTouched();
     }
+  }
+
+  doesUserExist(user: any): boolean {
+      return this.userDataList.some(
+        (existingUser: any) =>
+          existingUser.id == user.id ||
+          existingUser.email == user.email ||
+          Number(existingUser.phone) == user.phone
+      );
+  }
+
+  userDataFromUserList(userData: any) {
+    this.userForm.reset();
+    this.userForm.patchValue({
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      email: userData.email,
+      phone: userData.phone,
+      address: userData.address,
+      id: userData.id,
+    });
   }
 }
