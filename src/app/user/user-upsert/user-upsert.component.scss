@@ -1,0 +1,47 @@
+.user-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 25px;
+  padding-top: 10%;
+
+  h1 {
+    font-size: 30px;
+    font-weight: 500;
+  }
+
+  .form-field-block {
+    column-gap: 50px;
+    display: flex;
+
+    mat-form-field {
+      width: 250px;
+    }
+
+    input[type='number'] {
+      -moz-appearance: textfield;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+  }
+
+  .submit-block {
+    text-align: center;
+
+    button {
+      padding: 7px 35px;
+      font-size: 16px;
+      border: 0;
+      cursor: pointer;
+      border-radius: 10px;
+      background: #1b811b;
+      color: white;
+    }
+  }
+
+
+}
